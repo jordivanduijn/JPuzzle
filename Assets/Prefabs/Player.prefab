@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba6af7569fccc4eb717dcaef3a93b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzle: {fileID: 0}
+  clusterPrefab: {fileID: 2911911042891597966, guid: 4a3e677e72b5c494f8bf312f7581c0c4,
+    type: 3}
 --- !u!114 &7983720689814906835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +115,6 @@ GameObject:
   - component: {fileID: 3983169241552207126}
   - component: {fileID: 5700970563802564199}
   - component: {fileID: 6763209168235736007}
-  - component: {fileID: 7940612826743357652}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -179,16 +181,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &7940612826743357652
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4956270151361983645}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

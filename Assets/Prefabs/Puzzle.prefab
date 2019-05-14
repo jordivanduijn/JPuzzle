@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3267056283978113656}
   - component: {fileID: 171579093781190681}
+  - component: {fileID: 1012541178222223789}
   m_Layer: 0
   m_Name: Puzzle
   m_TagString: Untagged
@@ -44,6 +45,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: b72c6b8d11a4d9b49a41a0c856f02a3c, type: 3}
+  noise: {fileID: 2800000, guid: f23783288265ec742b5e19a69eeb943b, type: 3}
   numPieces: 25
   scale: 10
   material: {fileID: 2100000, guid: d38cfb96e775cd14cb0b9bcb914579ee, type: 2}
+  rotationSnapThreshold: 7
+  positionSnapThreshold: 0.2
+  puzzleThickness: 0.1
+  meshDetail: 40
+  colliderDetail: 10
+--- !u!114 &1012541178222223789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5338850087651131403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

@@ -5,29 +5,45 @@ using UnityEngine.Networking;
 
 public class GameManager : NetworkBehaviour
 {
-    public GameObject piecePrefab;
+    public GameObject networkPiecePrefab;
+    public GameObject clusterPrefab;
     public Puzzle puzzle;
-    
-    private List<GameObject> pieces;
-
+        
     public override void OnStartServer()
-    {
-        Debug.Log("Game Started");
-        
-        //generate all the piece data in a seperate class
-        
+    {        
         List<PieceData> piecesData = puzzle.GeneratePiecesData();
-
-        pieces = new List<GameObject>();  
+        
         foreach(PieceData data in piecesData){
-            GameObject pieceObject = Instantiate(piecePrefab);
 
-            //only set id and position for the server spawn, the rest is setup on the clients side (in Piece.Start())
-            pieceObject.GetComponent<Piece>().id = data.id;
-            pieceObject.transform.position = data.position;
+            GameObject clusterGameObject = Instantiate(clusterPrefab);
+            clusterGameObject.name = "Cluster"+data.id;
+            Cluster cluster = clusterGameObject.GetComponent<Cluster>();
+            cluster.id = data.id;
+
+            GameObject networkPieceGameObject = Instantiate(networkPiecePrefab);
+            NetworkPiece networkPiece = networkPieceGameObject.GetComponent<NetworkPiece>();
             
-            NetworkServer.Spawn(pieceObject);
-            pieces.Add(pieceObject);
+            networkPiece.Setup(data);
+            networkPieceGameObject.transform.position = data.position;
+            networkPieceGameObject.name = "NetworkPiece"+data.id;
+            networkPiece.clusterID = cluster.id;
+            
+            NetworkServer.Spawn(clusterGameObject);
+            NetworkServer.Spawn(networkPieceGameObject);
         }
+    }
+
+    public string getLocalPlayerID(){
+        Player[] players = FindObjectsOfType<Player>();
+        Debug.Log(players.Length);
+        foreach(Player p in players){
+            if(p.isLocalPlayer) {
+                Debug.Log("Local Player id: "+p.netId.ToString());
+                return p.netId.ToString();
+            }
+        }
+
+        Debug.Log("No local player found.");
+        return null;
     }
 }
