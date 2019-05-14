@@ -604,11 +604,6 @@ PrefabInstance:
       propertyPath: pieceMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d38cfb96e775cd14cb0b9bcb914579ee, type: 2}
-    - target: {fileID: 171579093781190681, guid: 5e27e057559fa2849a7b1f8c5ea2ad65,
-        type: 3}
-      propertyPath: numPieces
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 3267056283978113656, guid: 5e27e057559fa2849a7b1f8c5ea2ad65,
         type: 3}
       propertyPath: m_LocalPosition.x
