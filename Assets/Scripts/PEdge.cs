@@ -52,9 +52,11 @@ public class PEdge // : IComparer
 	public List<Vector2> BuildEdge (List<Vector2> controlPoints, int precision)
 	{
 		var result = new List<Vector2> ();
-		var approx = Splines.Approximate(controlPoints, precision);
 
+		var approx = Splines.Approximate(controlPoints, precision);	
+		
 		approx.ForEach(p => result.Add(Splines.ComplexMultiply (p, target - source) + source));
+		result.Add(target);
     
 		return result;
 	}

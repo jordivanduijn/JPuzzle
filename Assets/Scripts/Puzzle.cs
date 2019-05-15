@@ -11,6 +11,7 @@ public class Puzzle : MonoBehaviour
     public int numPieces = 25;
     public float scale = 10.0f; //a puzzle size of 10 means the diagonal (of the bounding box) will be 10 units
     public Material material;
+    public Material backsideMaterial;
 
     public float rotationSnapThreshold = 7f;
     public float positionSnapThreshold = 0.2f;
