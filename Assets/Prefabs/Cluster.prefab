@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieces: []
   id: 0
+  grabbed: 0
+  smoothMotionObj: {fileID: 0}
 --- !u!114 &1016276025660176836
 MonoBehaviour:
   m_ObjectHideFlags: 0

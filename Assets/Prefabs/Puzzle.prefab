@@ -48,10 +48,11 @@ MonoBehaviour:
   noise: {fileID: 2800000, guid: f23783288265ec742b5e19a69eeb943b, type: 3}
   numPieces: 25
   scale: 10
-  material: {fileID: 2100000, guid: d38cfb96e775cd14cb0b9bcb914579ee, type: 2}
+  imageMaterial: {fileID: 2100000, guid: d38cfb96e775cd14cb0b9bcb914579ee, type: 2}
+  backsideMaterial: {fileID: 2100000, guid: 0b387c39e463e79448685f31c58033de, type: 2}
   rotationSnapThreshold: 7
   positionSnapThreshold: 0.2
-  puzzleThickness: 0.1
+  thickness: 0.1
   meshDetail: 40
   colliderDetail: 10
 --- !u!114 &1012541178222223789

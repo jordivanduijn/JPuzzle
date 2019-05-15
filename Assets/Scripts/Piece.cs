@@ -14,6 +14,12 @@ public class Piece : MonoBehaviour
         Puzzle puzzle = GameObject.Find("Puzzle").GetComponent<Puzzle>();
         PieceData data = puzzle.GetPieceData(networkPiece.id);
         Setup(data);
+
+        Renderer renderer = GetComponent<MeshRenderer>();
+        renderer.materials = new Material[]{
+            puzzle.imageMaterial,
+            puzzle.backsideMaterial
+        };
     }
 
     void Update(){   
@@ -42,22 +48,4 @@ public class Piece : MonoBehaviour
         MeshCollider collider = gameObject.AddComponent<MeshCollider>();
         collider.sharedMesh = data.colliderMesh;
     }
-
-    // public bool isCorrect(Piece other){
-
-    //     //check if is neighbour
-    //     if(!neighbours.Contains(other.id)) return false;
-
-    //     //check relative rotation
-    //     float zRot = transform.rotation.eulerAngles.z;
-    //     float zRotOther = other.transform.rotation.eulerAngles.z;
-    //     if(Mathf.Abs(zRot - zRot) > rotationThreshold) return false;
-
-    //     //check relative position
-    //     float distance = (transform.position - other.transform.position).magnitude;
-    //     float correctDistance = (correctPosition - other.correctPosition).magnitude;
-    //     if(Mathf.Abs(distance - correctDistance) > distanceThreshold) return false;
-
-    //     return true;
-    // }
 }

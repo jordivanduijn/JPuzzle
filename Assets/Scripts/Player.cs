@@ -11,11 +11,18 @@ public class Player : NetworkBehaviour
     private NetworkPiece draggingPiece = null;
     private Piece lastPiece = null;
     private Vector3 mousePos;
+    private Transform smoothTransform;
 
     private Ray ray;
     private RaycastHit hit;
 
     private Plane playerHeightPlane;
+
+    void Awake(){
+        //unparent the visual representation of the player so we can create smooth motion
+        smoothTransform = transform.GetChild(0);
+        smoothTransform.parent = null;
+    }
 
     public override void OnStartLocalPlayer(){
         puzzle = GameObject.Find("Puzzle").GetComponent<Puzzle>();
@@ -24,6 +31,8 @@ public class Player : NetworkBehaviour
 
     void Update()
     {
+        SmoothMotion();
+
         if(!isLocalPlayer) return;        
         
         //every frame, update this player's position to the mouse position
@@ -47,6 +56,17 @@ public class Player : NetworkBehaviour
         Physics.Raycast(ray, out hit);
         if(hit.collider != null && Input.GetMouseButtonDown(0) && hit.collider.gameObject.GetComponent<Piece>() != null){
             GrabPiece(hit.collider.gameObject);
+        }
+    }
+
+    //make the visual representation of the player follow the networked transform
+    void SmoothMotion(){
+        if(isLocalPlayer){
+            smoothTransform.position = transform.position;
+            smoothTransform.rotation = Quaternion.Lerp(smoothTransform.rotation, transform.rotation, Mathf.Min(1f, Time.deltaTime * 10f));
+        } else {
+            smoothTransform.position = Vector3.Lerp(smoothTransform.position, transform.position, Mathf.Min(1f, Time.deltaTime * 10f));
+            smoothTransform.rotation = Quaternion.Lerp(smoothTransform.rotation, transform.rotation, Mathf.Min(1f, Time.deltaTime * 10f));
         }
     }
 
@@ -81,7 +101,7 @@ public class Player : NetworkBehaviour
         DisableNetworkTransform(draggingPiece.cluster.gameObject);
 
         //locally parent this piece's to the player
-        draggingPiece.cluster.transform.SetParent(transform);
+        draggingPiece.cluster.transform.SetParent(smoothTransform);
 
         //tell the server to parent this piece to the player so the other players will know
         CmdGrabPiece(draggingPiece.GetComponent<NetworkIdentity>().netId, netId);
@@ -94,8 +114,8 @@ public class Player : NetworkBehaviour
         //don't grab the piece if it's already grabbed by another player
         if(piece.cluster.grabbed) return;
 
-        GameObject parent = NetworkServer.FindLocalObject(parentId);
-        piece.cluster.transform.SetParent(parent.transform);
+        Player parent = NetworkServer.FindLocalObject(parentId).GetComponent<Player>();
+        piece.cluster.transform.SetParent(parent.smoothTransform);
         piece.cluster.grabbed = true;
     }
 
@@ -171,10 +191,8 @@ public class Player : NetworkBehaviour
         NetworkTransform netTrans = obj.GetComponent<NetworkTransform>();
         netTrans.transformSyncMode = NetworkTransform.TransformSyncMode.SyncNone;
     }
-
-    struct SnapInfo {
-        NetworkPiece piece;
-        Vector3 position;
-        Vector3 rotation;
+    
+    void OnDestroy(){
+        Destroy(smoothTransform.gameObject);
     }
 }

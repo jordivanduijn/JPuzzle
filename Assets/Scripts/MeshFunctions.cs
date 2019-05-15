@@ -16,12 +16,13 @@ public class MeshFunctions {
         int nT = triangles.Length;
         Vector3[] newVerts = new Vector3[nV * 4];
         List<int> newTris = new List<int>();
+        List<int> newTrisMaterial2 = new List<int>();
 
          //add bottom triangles in reverse order (to flip normals)
         for(int i = 0; i < nT; i+=3){  
-            newTris.Add(triangles[i+2]);
-            newTris.Add(triangles[i+1]);
-            newTris.Add(triangles[i]);
+            newTrisMaterial2.Add(triangles[i+2]);
+            newTrisMaterial2.Add(triangles[i+1]);
+            newTrisMaterial2.Add(triangles[i]);
         }
                 
         //extrude up
@@ -37,13 +38,13 @@ public class MeshFunctions {
             newVerts[i+nV*3] = extrudedVertex;
 
             //add triangles for the rim (two per vertex)
-            newTris.Add(i + nV);
-            newTris.Add(i == nV-1 ? 2*nV : i + 2*nV + 1);
-            newTris.Add(i + nV*2);
+            newTrisMaterial2.Add(i + nV);
+            newTrisMaterial2.Add(i == nV-1 ? 2*nV : i + 2*nV + 1);
+            newTrisMaterial2.Add(i + nV*2);
 
-            newTris.Add(i + nV);
-            newTris.Add(i == nV-1 ? nV : i + 1 + nV);
-            newTris.Add(i == nV-1 ? 2*nV : i + 2*nV + 1);
+            newTrisMaterial2.Add(i + nV);
+            newTrisMaterial2.Add(i == nV-1 ? nV : i + 1 + nV);
+            newTrisMaterial2.Add(i == nV-1 ? 2*nV : i + 2*nV + 1);
         }
 
         //add top triangles
@@ -54,7 +55,16 @@ public class MeshFunctions {
         }
 
         mesh.vertices = newVerts;
-        mesh.triangles = newTris.ToArray();
+
+        //set submesh count to 2 so we can have 2 materials
+        mesh.subMeshCount = 2;
+
+        //set triangles of the 'image' material
+        mesh.SetTriangles(newTris.ToArray(), 0);
+
+        //set triangles of the 'backside'
+        mesh.SetTriangles(newTrisMaterial2.ToArray(), 1);
+        
         mesh.RecalculateNormals();
 
         return mesh;

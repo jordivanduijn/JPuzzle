@@ -10,7 +10,7 @@ public class Puzzle : MonoBehaviour
     public Texture2D noise;
     public int numPieces = 25;
     public float scale = 10.0f; //a puzzle size of 10 means the diagonal (of the bounding box) will be 10 units
-    public Material material;
+    public Material imageMaterial;
     public Material backsideMaterial;
 
     public float rotationSnapThreshold = 7f;
@@ -29,7 +29,7 @@ public class Puzzle : MonoBehaviour
         float factor = Mathf.Sqrt(image.width*image.width + image.height*image.height) / scale;
         width = image.width / factor;
         height = image.height / factor;
-        material.SetTexture("_MainTex", image);
+        imageMaterial.SetTexture("_MainTex", image);
         GeneratePiecesData();
     }
 
